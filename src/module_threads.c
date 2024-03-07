@@ -43,6 +43,7 @@ int inc_sset_thread(void *data)
 
         while (!kthread_should_stop() || !sset_queue_empty(sq)) {
                 // wait for a sset to process or a kthread_stop call
+                //TUTAJ wpada i sobie czeka
                 wait_event_interruptible(sq->event,
                                          kthread_should_stop() ||
                                                  !sset_queue_empty(sq));
