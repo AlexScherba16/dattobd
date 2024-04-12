@@ -94,7 +94,7 @@ struct block_device *blkdev_get_by_path(const char *pathname, fmode_t mode,
                 handle.bdev=bdev;
                 handle.holder=NULL;
                 handle.mode=mode;
-                bdev_release(handle);
+                bdev_release(&handle);
 #else
                 blkdev_put(bdev, mode);
 #endif
