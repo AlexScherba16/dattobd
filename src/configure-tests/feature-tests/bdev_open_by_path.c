@@ -9,6 +9,6 @@
 MODULE_LICENSE("GPL");
 
 static inline void dummy(void){
-	struct block_device *bd = bdev_open_by_path("path", FMODE_READ, NULL, NULL);
+	struct bdev_handle *bd = bdev_open_by_path("path", FMODE_READ, NULL, NULL);
 	if(bd) bd = NULL;
 }
