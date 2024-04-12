@@ -46,7 +46,7 @@ struct block_device;
 #if !defined HAVE_BLKDEV_GET_BY_PATH_1 && !defined HAVE_BDEV_OPEN_BY_PATH
 #define dattobd_blkdev_get_by_path(path, mode, holder) blkdev_get_by_path(path,mode,holder)
 #elif defined HAVE_BDEV_OPEN_BY_PATH && !defined HAVE_BLKDEV_GET_BY_PATH
-#define dattobd_blkdev_get_by_path(path, mode, holder) bdev_open_by_path(path,mode,holder,NULL)
+#define dattobd_blkdev_get_by_path(path, mode, holder) bdev_open_by_path(path,mode,holder,NULL)->bdev
 #else
 #define dattobd_blkdev_get_by_path(path, mode, holder) blkdev_get_by_path(path,mode,holder,NULL)
 #endif 
