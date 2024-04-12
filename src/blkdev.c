@@ -89,6 +89,12 @@ struct block_device *blkdev_get_by_path(const char *pathname, fmode_t mode,
                 blkdev_put(bdev);
 #elif defined HAVE_BLKDEV_PUT_2
                 blkdev_put(bdev,NULL);
+#elif defined HAVE_BDEV_THAW
+                struct bdev_handle handle;
+                handle.bdev=bdev;
+                handle.holder=NULL;
+                handle.mode=mode;
+                bdev_release(handle);
 #else
                 blkdev_put(bdev, mode);
 #endif

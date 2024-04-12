@@ -1288,7 +1288,11 @@ static int __tracer_transition_tracing(
                         return (int)PTR_ERR(sb);
                 }
 #else
+#ifdef HAVE_BDEV_THAW
+                ret= bdev_freeze(bdev);
+#else
                 ret = freeze_bdev(bdev);
+#endif
                 if (ret) {
 #ifdef HAVE_BDEVNAME                          
                         LOG_ERROR(ret, "error freezing '%s'", bdev_name);
@@ -1355,6 +1359,8 @@ static int __tracer_transition_tracing(
 #endif                
 #ifdef HAVE_THAW_BDEV_INT
                 ret = thaw_bdev(bdev, sb);
+#elif defined HAVE_BDEV_THAT
+                ret=bdev_thaw(bdev);
 #else
                 ret = thaw_bdev(bdev);
 #endif

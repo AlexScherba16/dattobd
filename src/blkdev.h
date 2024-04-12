@@ -16,6 +16,14 @@ struct block_device;
 #define dattobd_blkdev_put(bdev) blkdev_put(bdev);
 #elif defined HAVE_BLKDEV_PUT_2
 #define dattobd_blkdev_put(bdev) blkdev_put(bdev,NULL);
+#elif defined HAVE_BDEV_THAW
+#define dattobd_blkdev_put(bdev) ({\
+    struct bdev_handle handle;\
+    handle.bdev=bdev;\
+    handle.mode=FMODE_READ;\
+    handle.holder=NULL;\
+    bdev_release(&handle);\
+    })
 #else
 #define dattobd_blkdev_put(bdev) blkdev_put(bdev, FMODE_READ);
 #endif
@@ -53,9 +61,12 @@ struct block_device *blkdev_get_by_path(const char *path, fmode_t mode,
 #elif defined HAVE_GET_SUPER
 #define dattobd_get_super(bdev) get_super(bdev)
 #define dattobd_drop_super(sb) drop_super(sb)
-#else 
+#elif defined HAVE_BD_HAS_SUBMIT_BIO
 struct super_block* dattobd_get_active_super(struct block_device*);
 #define dattobd_get_super(bdev) dattobd_get_active_super(bdev)
+#define dattobd_drop_super(sb)
+#else
+#define dattobd_get_super(bdev) (struct super_block*)(bdev)->bd_holder
 #define dattobd_drop_super(sb)
 #endif
 #endif /* BLKDEV_H_ */
