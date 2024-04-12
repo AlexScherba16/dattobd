@@ -1359,7 +1359,7 @@ static int __tracer_transition_tracing(
 #endif                
 #ifdef HAVE_THAW_BDEV_INT
                 ret = thaw_bdev(bdev, sb);
-#elif defined HAVE_BDEV_THAT
+#elif defined HAVE_BDEV_THAW
                 ret=bdev_thaw(bdev);
 #else
                 ret = thaw_bdev(bdev);
