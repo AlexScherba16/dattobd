@@ -112,8 +112,9 @@ int __verify_bdev_writable(const char *bdev_path, int *out)
                 writable = !(sb->s_flags & MS_RDONLY);
                 dattobd_drop_super(sb);
         }
-
+        LOG_DEBUG("ENTER __verify_bdev_writable");
         dattobd_blkdev_put(bdev);
+        LOG_DEBUG("EXIT __verify_bdev_writable")
         *out = writable;
         return 0;
 }

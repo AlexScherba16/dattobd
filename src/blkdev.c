@@ -84,6 +84,7 @@ struct block_device *blkdev_get_by_path(const char *pathname, fmode_t mode,
         if (IS_ERR(bdev))
                 return bdev;
 
+        LOG_DEBUG("ENTER blkdev_get_by_path");
         if ((mode & FMODE_WRITE) && bdev_read_only(bdev)) {
 #ifdef HAVE_BLKDEV_PUT_1
                 blkdev_put(bdev);
@@ -100,7 +101,7 @@ struct block_device *blkdev_get_by_path(const char *pathname, fmode_t mode,
 #endif
                 return ERR_PTR(-EACCES);
         }
-
+        LOG_DEBUG("EXIT blkdev_get_by_path");
         return bdev;
 }
 #endif

@@ -263,7 +263,9 @@ void post_umount_check(int dormant_ret, int umount_ret, unsigned int idx,
                         return;
                 }
 
+                LOG_DEBUG("ENTER post_umount_check");
                 dattobd_blkdev_put(bdev);
+                LOG_DEBUG("EXIT post_umount_check");
 
                 LOG_DEBUG("umount call failed, reactivating tracer %u", idx);
                 auto_transition_active(idx, dir_name);
