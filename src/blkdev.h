@@ -63,7 +63,7 @@ struct block_device *blkdev_get_by_path(const char *path, fmode_t mode,
 #elif defined HAVE_GET_SUPER
 #define dattobd_get_super(bdev) get_super(bdev)
 #define dattobd_drop_super(sb) drop_super(sb)
-#elif defined HAVE_BD_HAS_SUBMIT_BIO
+#elif defined HAVE_BD_HAS_SUBMIT_BIO && !defined HAVE_BDEV_THAW
 struct super_block* dattobd_get_active_super(struct block_device*);
 #define dattobd_get_super(bdev) dattobd_get_active_super(bdev)
 #define dattobd_drop_super(sb)
