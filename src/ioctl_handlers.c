@@ -114,7 +114,7 @@ int __verify_bdev_writable(const char *bdev_path, int *out)
         }
         LOG_DEBUG("ENTER __verify_bdev_writable");
         dattobd_blkdev_put(bdev);
-        LOG_DEBUG("EXIT __verify_bdev_writable")
+        LOG_DEBUG("EXIT __verify_bdev_writable");
         *out = writable;
         return 0;
 }
