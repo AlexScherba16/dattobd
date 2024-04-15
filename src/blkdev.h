@@ -18,11 +18,9 @@ struct block_device;
 #define dattobd_blkdev_put(bdev) blkdev_put(bdev,NULL);
 #elif defined HAVE_BDEV_THAW
 #define dattobd_blkdev_put(b) ({\
-    struct bdev_handle handle;\
-    handle.bdev=b;\
-    handle.mode=FMODE_READ;\
-    handle.holder=NULL;\
-    bdev_release(&handle);\
+    struct bdev_handle* handle;\
+    handle=bdev_open_by_dev(b->bd_dev, FMODE_READ, &bdev, NULL);
+    bdev_release(handle);\
     })
 #else
 #define dattobd_blkdev_put(bdev) blkdev_put(bdev, FMODE_READ);
