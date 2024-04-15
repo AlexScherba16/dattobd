@@ -2140,8 +2140,8 @@ void tracer_dattobd_info(const struct snap_device *dev,
         info->cache_size = (dev->sd_cache_size) ?
                                    dev->sd_cache_size :
                                    dattobd_cow_max_memory_default;
-        strlcpy(info->cow, dev->sd_cow_path, PATH_MAX);
-        strlcpy(info->bdev, dev->sd_bdev_path, PATH_MAX);
+        strscpy(info->cow, dev->sd_cow_path, PATH_MAX);
+        strscpy(info->bdev, dev->sd_bdev_path, PATH_MAX);
 
         if (!test_bit(UNVERIFIED, &dev->sd_state)) {
                 info->falloc_size = dev->sd_cow->file_max;
