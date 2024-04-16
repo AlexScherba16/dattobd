@@ -107,8 +107,13 @@ int __verify_bdev_writable(const char *bdev_path, int *out)
                 return PTR_ERR(bdev);
         }
 
+        if(bdev==NULL){
+                LOG_DEBUG("bdev is a null");
+        }
+
         sb = dattobd_get_super(bdev);
         if (sb) {
+                LOG_DEBUG("Super block is correct");
                 writable = !(sb->s_flags & MS_RDONLY);
                 dattobd_drop_super(sb);
         }
