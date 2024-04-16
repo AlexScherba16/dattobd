@@ -23,9 +23,9 @@ struct block_device;
     if(!handle){\
     LOG_DEBUG("Error could not open a handle");\
     handle=kmalloc(sizeof(struct bdev_handle),GFP_KERNEL);
-    handle->bdev=b;
-    handle->holder=b;
-    handle->mode=FMODE_READ;
+    handle->bdev=b;\
+    handle->holder=b;\
+    handle->mode=FMODE_READ;\
     }\
     bdev_release(handle);\
     })
