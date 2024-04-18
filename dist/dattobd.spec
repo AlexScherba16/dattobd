@@ -319,7 +319,32 @@ sed -e "s:@prefix@:%{_prefix}:g" \
 
 # Generate symbols for library package (Debian/Ubuntu only)
 %if "%{_vendor}" == "debbuild"
+
 mkdir -p %{buildroot}/%{libname}/DEBIAN
+%if 0%{?ubuntu} > 2204
+
+OS_VERSION=$(lsb_release -rs)
+if [ "$OS_VERSION" == "24.04" ]; then
+    # mkdir -p $RPM_BUILD_ROOT/debian
+    cat > %{buildroot}/%{libname}/DEBIAN/control <<EOL
+Source: your-package
+Section: misc
+Priority: optional
+Maintainer: Your Name <your.email@example.com>
+Build-Depends: debhelper (>= 9)
+Standards-Version: 3.9.6
+Homepage: http://example.com
+
+Package: your-package
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: Brief description of your package
+ Long description of your package.
+EOL
+fi
+%endif
+
+# mkdir -p %{buildroot}/%{libname}/DEBIAN
 dpkg-gensymbols -P%{buildroot} -p%{libname} -v%{version}-%{release} -e%{buildroot}%{_libdir}/%{libprefix}.so.%{?!libsover:0}%{?libsover} -e%{buildroot}%{_libdir}/%{libprefix}.so.%{?!libsover:0}%{?libsover}.* -O%{buildroot}/%{libname}/DEBIAN/symbols
 %endif
 
